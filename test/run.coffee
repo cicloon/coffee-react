@@ -19,7 +19,7 @@ test 'run cjsx file', (t) ->
   expected = fs.readFileSync './expected/rendered-output.html', encoding: 'utf8'
 
   outStream = concat {encoding: 'buffer'}, (output) ->
-    t.equal output.toString(), expected, 'got output'
+    t.equal output.toString(), expected.replace(/(\r\n|\n|\r)/gm,""), 'got output'
 
   errStream = concat {encoding: 'buffer'}, (output) ->
     if output.toString().length

@@ -6,6 +6,7 @@ fs = require 'fs'
 require('../register')
 
 React = require 'react'
+ReactDOMServer = require 'react-dom/server'
 
 test 'require cjsx coffee file', (t) ->
   t.plan(1)
@@ -13,7 +14,7 @@ test 'require cjsx coffee file', (t) ->
   expected = fs.readFileSync './expected/rendered-output.html', encoding: 'utf8'
 
   SomeClass = require '../example/some-class'
-  rendered = React.renderToStaticMarkup(React.createElement(SomeClass))
+  rendered = ReactDOMServer.renderToStaticMarkup(React.createElement(SomeClass))
 
-  t.equal rendered, expected, 'correct output'
+  t.equal rendered, expected.replace(/(\r\n|\n|\r)/gm,""), 'correct output'
   t.end()
